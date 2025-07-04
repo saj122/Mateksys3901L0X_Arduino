@@ -35,6 +35,11 @@ void Mateksys3901L0X::setCurrentFlow(int32_t dx, int32_t dy, int32_t d, double f
     _currentMeasurement.distance = d;
     _currentMeasurement.flowX = dx*fov_mm;
     _currentMeasurement.flowY = dy*fov_mm;
+    if(d < MIN_HEIGHT || d > MAX_HEIGHT) {
+        _currentMeasurement.isInRange = false;
+    } else {
+        _currentMeasurement.isInRange = true;
+    }
 }
 
 bool Mateksys3901L0X::waitFlow() {
@@ -88,10 +93,6 @@ bool Mateksys3901L0X::waitFlow() {
         _recvPos += 1;
 
         if(_cmd == 7938 && _recvPos > 17) {
-            if(_distance < MIN_HEIGHT || _distance > MAX_HEIGHT) {
-                _distance = 0;
-            }
-
             double fov_mm = pixelToMillimeters(_distance);
             setCurrentFlow(_flowX, _flowY, _distance, fov_mm);
             return true;

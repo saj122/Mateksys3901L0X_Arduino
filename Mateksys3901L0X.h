@@ -15,6 +15,7 @@ struct OptFlowMeasurement
     int32_t distance;
     double flowX;
     double flowY;
+    bool isInRange;
 };
 
 class Mateksys3901L0X {

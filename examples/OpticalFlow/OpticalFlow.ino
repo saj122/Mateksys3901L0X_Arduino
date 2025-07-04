@@ -11,12 +11,14 @@ void setup() {
 
 void loop() {
   if (optFlow.waitFlow()) {
-    int32_t distance = optFlow.getCurrentFlow().distance; // mm
-    double flowX = optFlow.getCurrentFlow().flowX; // mm/s
-    double flowY = optFlow.getCurrentFlow().flowY; //mm/s
-    
-    Serial.println("Distance: " + String(distance));
-    Serial.println("FlowX: " + String(flowX));
-    Serial.println("FlowY: " + String(flowY));
+    if(optFlow.getCurrentFlow().isInRange) {
+      int32_t distance = optFlow.getCurrentFlow().distance; // mm
+      double flowX = optFlow.getCurrentFlow().flowX; // mm/s
+      double flowY = optFlow.getCurrentFlow().flowY; //mm/s
+      
+      Serial.println("Distance: " + String(distance));
+      Serial.println("FlowX: " + String(flowX));
+      Serial.println("FlowY: " + String(flowY));
+    }
   }
 }
